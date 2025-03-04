@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../assests/style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+</head>  
+<body class="login">
+
+    <form id="loginForm" class="wrapper">
+        <h1>LOGIN</h1>
+
+        <div class="input-box">
+            <input type="text" id="loginUsername" placeholder="Username" required>
+            <i class='bx bxs-user'></i>
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <i class='bx bxs-lock'></i>
+        </div>
+
+        <div class="remember-me">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember Me</label>
+        </div>
+        <button type="submit" class="btn">Login</button>
+
+        <!-- Register Link Added Here -->
+        <div class="register-link">
+            <p>Don't have an account? <a href="register.html">Register here</a></p>
+        </div>
+
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let savedUsername = localStorage.getItem("rememberedUsername");
+            if (savedUsername) {
+                document.getElementById("loginUsername").value = savedUsername;
+                document.getElementById("rememberMe").checked = true;
+            }
+        });
+    
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+    
+            let storedUser = JSON.parse(localStorage.getItem("user"));
+            let enteredUsername = document.getElementById("loginUsername").value.trim();s
+            let enteredPassword = document.getElementById("loginPassword").value.trim();
+            let rememberMe = document.getElementById("rememberMe").checked;
+    
+            let errorMessage = document.querySelector(".error-message");
+            if (!errorMessage) {
+                errorMessage = document.createElement("p");
+                errorMessage.className = "error-message";
+                errorMessage.style.color = "red";
+                document.getElementById("loginForm").appendChild(errorMessage);
+            }
+    
+            if (!storedUser) {
+                errorMessage.textContent = "No registered user found!";
+                return;
+            }
+    
+            if (enteredUsername === storedUser.username && enteredPassword === storedUser.password) {
+                localStorage.setItem("loggedIn", "true");
+    
+                // Store username if "Remember Me" is checked, otherwise remove it
+                if (rememberMe) {
+                    localStorage.setItem("rememberedUsername", enteredUsername);
+                } else {
+                    localStorage.removeItem("rememberedUsername");
+                }
+    
+                alert("Login successful!");
+                window.location.href = "index.html";
+            } else {
+               alert("Invalid username or password!");
+            }
+        });
+    </script>
+    
+    
+    
+
+</body>  
+</html>
