@@ -36,53 +36,53 @@
     </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let savedUsername = localStorage.getItem("rememberedUsername");
-            if (savedUsername) {
-                document.getElementById("loginUsername").value = savedUsername;
-                document.getElementById("rememberMe").checked = true;
-            }
-        });
-    
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-    
-            let storedUser = JSON.parse(localStorage.getItem("user"));
-            let enteredUsername = document.getElementById("loginUsername").value.trim();s
-            let enteredPassword = document.getElementById("loginPassword").value.trim();
-            let rememberMe = document.getElementById("rememberMe").checked;
-    
-            let errorMessage = document.querySelector(".error-message");
-            if (!errorMessage) {
-                errorMessage = document.createElement("p");
-                errorMessage.className = "error-message";
-                errorMessage.style.color = "red";
-                document.getElementById("loginForm").appendChild(errorMessage);
-            }
-    
-            if (!storedUser) {
-                errorMessage.textContent = "No registered user found!";
-                return;
-            }
-    
-            if (enteredUsername === storedUser.username && enteredPassword === storedUser.password) {
-                localStorage.setItem("loggedIn", "true");
-    
-                // Store username if "Remember Me" is checked, otherwise remove it
-                if (rememberMe) {
-                    localStorage.setItem("rememberedUsername", enteredUsername);
-                } else {
-                    localStorage.removeItem("rememberedUsername");
-                }
-    
-                alert("Login successful!");
-                window.location.href = "index.html";
+    document.addEventListener("DOMContentLoaded", function() {
+        let savedUsername = localStorage.getItem("rememberedUsername");
+        if (savedUsername) {
+            document.getElementById("loginUsername").value = savedUsername;
+            document.getElementById("rememberMe").checked = true;
+        }
+    });
+
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        let storedUser = JSON.parse(localStorage.getItem("user"));
+        let enteredUsername = document.getElementById("loginUsername").value.trim();
+        let enteredPassword = document.getElementById("loginPassword").value.trim();
+        let rememberMe = document.getElementById("rememberMe").checked;
+
+        let errorMessage = document.querySelector(".error-message");
+        if (!errorMessage) {
+            errorMessage = document.createElement("p");
+            errorMessage.className = "error-message";
+            errorMessage.style.color = "red";
+            document.getElementById("loginForm").appendChild(errorMessage);
+        }
+
+        if (!storedUser) {
+            errorMessage.textContent = "No registered user found!";
+            return;
+        }
+
+        if (enteredUsername === storedUser.username && enteredPassword === storedUser.password) {
+            localStorage.setItem("loggedIn", "true");
+
+            // Store username if "Remember Me" is checked, otherwise remove it
+            if (rememberMe) {
+                localStorage.setItem("rememberedUsername", enteredUsername);
             } else {
-               alert("Invalid username or password!");
+                localStorage.removeItem("rememberedUsername");
             }
-        });
-    </script>
-    
+
+            alert("Login successful!");
+            window.location.href = "index.html";
+        } else {
+            alert("Invalid username or password!");
+        }
+    });
+</script>
+
     
     
 
